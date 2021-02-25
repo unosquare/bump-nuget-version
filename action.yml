@@ -12,7 +12,8 @@ inputs:
 runs:
   using: 'composite'
   steps: 
-    - run: sudo npm install -g semver
+    - run: |
+      ! sudo npm install -g semver
       shell: bash
     - run: version=$(cat ${{ inputs.csproj }} | sed -ne '/Version/{s/.*<Version>\(.*\)<\/Version>.*/\1/p;q;}')
       shell: bash
