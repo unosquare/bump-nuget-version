@@ -1,0 +1,24 @@
+name: 'Bump Nuget Version'
+description: 'This action will add a Nuget source'
+inputs:
+  versionLevel:
+    description: 'Version level (patch, minor or major)'     
+    required: true
+    default: 'patch'
+  csproj:
+    description: 'CsProj full path'
+    required: true
+    
+runs:
+  using: 'composite'
+  steps: 
+    - run: sudo npm install -g semver
+      shell: bash
+    - run: version=$(cat ${{ inputs.csproj }} | sed -ne '/Version/{s/.*<Version>\(.*\)<\/Version>.*/\1/p;q;}')
+      shell: bash
+    - run: oldVersion="<Version>$version</Version>"
+      shell: bash
+    - run: newVersion="<Version>$(semver -i ${{ inputs.versionLevel }} $version)</Version>"
+      shell: bash
+    - run: sed -i "s|$oldVersion|$newVersion|" ${{ inputs.csproj }}
+      shell: bash
