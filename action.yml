@@ -1,7 +1,7 @@
 name: 'Bump Nuget Version'
 description: 'This action will add a Nuget source'
 inputs:
-  versionLevel:
+  level:
     description: 'Version level (patch, minor or major)'     
     required: true
     default: 'patch'
@@ -18,7 +18,7 @@ runs:
       shell: bash
     - run: oldVersion="<Version>$version</Version>"
       shell: bash
-    - run: newVersion="<Version>$(semver -i ${{ inputs.versionLevel }} $version)</Version>"
+    - run: newVersion="<Version>$(semver -i ${{ inputs.level }} $version)</Version>"
       shell: bash
     - run: sed -i "s|$oldVersion|$newVersion|" ${{ inputs.csproj }}
       shell: bash
