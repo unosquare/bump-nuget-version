@@ -12,14 +12,7 @@ inputs:
 runs:
   using: 'composite'
   steps: 
-    - shell: bash
-      run: |
-        ! sudo npm install -g semver
-    - run: version=$(cat ${{ inputs.csproj }} | sed -ne '/Version/{s/.*<Version>\(.*\)<\/Version>.*/\1/p;q;}')
+    - run: sudo npm install -g semver
       shell: bash
-    - run: oldVersion="<Version>$version</Version>"
-      shell: bash
-    - run: newVersion="<Version>$(semver -i ${{ inputs.level }} $version)</Version>"
-      shell: bash
-    - run: sed -i "s|$oldVersion|$newVersion|" ${{ inputs.csproj }}
+    - run: export level=${{ inputs.level }}; export csproj=${{ inputs.csproj }}; ${{ github.action_path }}/bump.sh
       shell: bash
