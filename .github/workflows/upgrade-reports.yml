@@ -1,0 +1,32 @@
+name: Upgrade Report APIs (GitHub Registry)
+
+on: 
+  workflow_call:
+    secrets:
+      github-token:
+        description: 'The GitHub PAT token to perform checkout and publish.'
+        required: true
+        
+jobs:
+  call-updates:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix: 
+        include: 
+          - workflow: 5721560
+            repo: "core.sharepoint.reporting.api"
+            ref: "dev"
+          - workflow: 5721421
+            repo: "core.exec.api"
+            ref: "dev"
+                          
+    steps:
+      - name: 📞 Call dispatch
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/unosquare/${{ matrix.repo }}/actions/workflows/${{ matrix.workflow }}/dispatches' \
+          --header "authorization: Bearer $TOKEN" \
+          --data '{"ref": "${{ matrix.ref }}"}'
+        env:
+          TOKEN: ${{ secrets.github-token }}
