@@ -3,8 +3,8 @@ description: 'This action will add a Nuget source'
 inputs:
   level:
     description: 'Version level (patch, minor or major)'     
-    required: true
-    default: 'patch'
+    required: false
+    default: ${{ contains(github.event.head_commit.message, '[PATCH]') && 'patch' || contains(github.event.head_commit.message, '[MINOR]') && 'minor' || contains(github.event.head_commit.message, '[MAJOR]') && 'major' || 'prerelease' }}
   csproj:
     description: 'CsProj full path'
     required: true
