@@ -61,7 +61,7 @@ jobs:
     - name: ➕ Add nugets source
       uses: unosquare/add-nuget-source@master 
       with:
-        access-token: ${{ secrets.github }}
+        access-token: ${{ secrets.github-token }}
     - name: 🐝 Bump version
       uses: unosquare/bump-nuget-version@master 
       with:
