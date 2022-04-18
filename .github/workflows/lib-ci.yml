@@ -37,16 +37,18 @@ on:
         required: false
         default: ${{ contains(github.event.head_commit.message, '[PATCH]') && 'patch' || contains(github.event.head_commit.message, '[MINOR]') && 'minor' || contains(github.event.head_commit.message, '[MAJOR]') && 'major' || 'prerelease' }}
         type: string
+        
 jobs:
   lib-ci:
     runs-on: ubuntu-latest
+    
     steps:
     - name: 🧑‍💻 Checkout codebase
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         token: ${{ secrets.github-token }}
     - name: 🥓 Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: |
           5.0.x
