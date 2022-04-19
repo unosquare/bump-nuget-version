@@ -35,7 +35,7 @@ on:
       version-bump-level:
         description: 'The version component to bump after publishing.'
         required: false
-        default: ${{ contains(github.event.head_commit.message, '[PATCH]') && 'patch' || contains(github.event.head_commit.message, '[MINOR]') && 'minor' || contains(github.event.head_commit.message, '[MAJOR]') && 'major' || 'prerelease' }}
+        default: ${{ contains(github.event.head_commit.message, '[MINOR]') && 'minor' || contains(github.event.head_commit.message, '[MAJOR]') && 'major' || 'patch' }}
         type: string
         
 jobs:
