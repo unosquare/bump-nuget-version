@@ -16,10 +16,10 @@ jobs:
         include: 
           - workflow: 5721560
             repo: "core.sharepoint.reporting.api"
-            ref: "dev"
+            ref: "master"
           - workflow: 5721421
             repo: "core.exec.api"
-            ref: "dev"
+            ref: "master"
                           
     steps:
       - name: 📞 Call dispatch
