@@ -86,4 +86,3 @@ jobs:
       with: 
         package-name: ${{ inputs.project-name }}
         min-versions-to-keep: ${{ inputs.prerelease-versions-kept }}
-        delete-only-pre-release-versions: 'true'
