@@ -1,0 +1,39 @@
+name: Lib - Build with no tests
+
+on: 
+  workflow_call:
+    secrets:
+      github-token:
+        description: 'The GitHub PAT token to perform checkout and publish.'
+        required: true
+      cache-version:
+        description: 'The Cache version.'
+        required: true
+    inputs:
+      sln-file:
+        description: 'The name of the project to build. Must match the directory name.'
+        required: true
+        type: string
+        
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🛎 Checkout
+      uses: actions/checkout@v3
+    - name: 📦 Cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          nuget-${{ secrets.cache-version }}-
+    - name: ➕ Add nugets source
+      uses: unosquare/add-nuget-source@master 
+      with:
+        access-token: ${{ secrets.github-token }}
+    - name: 🏗 Restore & Build
+      run: |
+        dotnet restore
+        dotnet build -c Release ${{ inputs.sln-file }}
