@@ -17,14 +17,6 @@ on:
         description: 'The name of the project to build. Must match the directory name.'
         required: true
         type: string
-      business-test-csproj:
-        description: 'The route to the business test csproj'
-        required: true
-        type: string
-      api-test-csproj:
-        description: 'The route to the api test csproj'
-        required: true
-        type: string
       sonar-key:
         description: 'The name of the project to build. Must match the directory name.'
         required: true
@@ -82,6 +74,5 @@ jobs:
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.sonar-key }}" /o:"unosquare" /d:sonar.login="${{ secrets.sonar-token }}" /d:sonar.host.url="https://sonarcloud.io"
         dotnet build -c Release ${{ inputs.sln-file }}
-        dotnet test --no-restore --collect "Code Coverage" {{ inputs.business-test-csproj }} -c Release
-        dotnet test --no-restore --collect "Code Coverage" {{ inputs.api-test-csproj }} -c Release
+        dotnet test --no-restore --collect "Code Coverage" {{ inputs.sln-file }}
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.sonar-token }}"
