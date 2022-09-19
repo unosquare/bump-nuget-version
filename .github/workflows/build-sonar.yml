@@ -66,13 +66,17 @@ jobs:
       run: |
         New-Item -Path .\.sonar\scanner -ItemType Directory
         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+    - name: Install dotnet coverage
+      shell: powershell
+      run: |
+        dotnet tool install --global dotnet-coverage
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.github-token }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.sonar-token }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.sonar-key }}" /o:"unosquare" /d:sonar.login="${{ secrets.sonar-token }}" /d:sonar.host.url="https://sonarcloud.io"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.sonar-key }}" /o:"unosquare" /d:sonar.login="${{ secrets.sonar-token }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
         dotnet build -c Release ${{ inputs.sln-file }}
-        dotnet test --no-restore --collect "Code Coverage" {{ inputs.sln-file }}
+        dotnet-coverage collect 'dotnet test {{ inputs.sln-file }}' -f xml  -o 'coverage.xml'
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.sonar-token }}"
