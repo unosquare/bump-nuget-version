@@ -1,0 +1,73 @@
+name: Lib - Build, Bump and Push (Nuget.org Registry)
+
+on: 
+  workflow_call:
+    secrets:
+      nuget-api-key:
+        description: 'The Nuget.org publish API key to push the Nuget package.'
+        required: true
+      github-token:
+        description: 'The GitHub PAT token to perform checkout and publish.'
+        required: true
+      cache-version:
+        description: 'The Cache version.'
+        required: true
+     
+    inputs:
+      project-name:
+        description: 'The name of the project to build. Must match the directory name.'
+        required: true
+        type: string
+      base-path:
+        description: 'The working directory base path with a trailing forward-slash'     
+        required: false
+        default: '/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/'
+        type: string
+      source-path:
+        description: > 
+            The source path relative to the base path with a trailing forward-slash.
+            For example, if the project folder is in a subfolder called src, then this value needs to be set to src/
+            If there is no subfolder, just leave it empty.
+        required: false
+        default: ''
+        type: string
+      prerelease-versions-kept:
+        description: 'The number of pre-release versions kept in the GitHub registry.'
+        required: false
+        type: number
+        default: 10
+      version-bump-level:
+        description: 'The version component to bump after publishing.'
+        required: false
+        default: ${{ contains(github.event.head_commit.message, '[MINOR]') && 'minor' || contains(github.event.head_commit.message, '[MAJOR]') && 'major' || 'patch' }}
+        type: string
+        
+jobs:
+  lib-ci:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🧑‍💻 Checkout codebase
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.github-token }}
+    - name: 📦 Cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          nuget-${{ secrets.cache-version }}-
+    - name: 🐝 Bump version
+      uses: unosquare/bump-nuget-version@master 
+      with:
+        level: ${{ inputs.version-bump-level }}
+        csproj: '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/${{ inputs.project-name }}.csproj'
+    - name: 🏗 Build and push nuget
+      run: |
+        dotnet pack '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/${{ inputs.project-name }}.csproj' --configuration Release 
+        dotnet nuget push ${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.nuget-api-key }}
+    - name: 📌 Commit
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: '[skip ci] Bump version'
