@@ -63,7 +63,7 @@ jobs:
     - name: 🔧 Install tools
       run: dotnet tool install --global dotnet-outdated-tool
     - name: 🍗 Upgrade nugets
-      run: dotnet outdated -u
+      run: dotnet outdated -u '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/${{ inputs.project-name }}.csproj'
     - name: 🐝 Bump version
       uses: unosquare/bump-nuget-version@master 
       with:
