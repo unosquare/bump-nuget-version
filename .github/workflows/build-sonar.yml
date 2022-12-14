@@ -1,4 +1,4 @@
-name: Lib - Build with no tests
+name: Lib - Build, Test and Report Sonar
 
 on: 
   workflow_call:
