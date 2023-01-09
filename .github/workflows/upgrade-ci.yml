@@ -82,7 +82,7 @@ jobs:
       with:
         message: '[skip ci] Bump version'
     - name: 🌿 Clean up stale packages
-      uses: actions/delete-package-versions@v3
+      uses: actions/delete-package-versions@v4
       with: 
         package-name: ${{ inputs.project-name }}
         min-versions-to-keep: ${{ inputs.prerelease-versions-kept }}
