@@ -82,8 +82,3 @@ jobs:
       uses: EndBug/add-and-commit@v9
       with:
         message: '[skip ci] Bump version'
-    - name: 🌿 Clean up stale packages
-      uses: actions/delete-package-versions@v4
-      with: 
-        package-name: ${{ inputs.project-name }}
-        min-versions-to-keep: ${{ inputs.prerelease-versions-kept }}
