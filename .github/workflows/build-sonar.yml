@@ -24,7 +24,7 @@ on:
         
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: 🛎 Checkout
@@ -42,6 +42,9 @@ jobs:
       uses: unosquare/add-nuget-source@master 
       with:
         access-token: ${{ secrets.github-token }}
+    - name: Install dotnet coverage
+      run: |
+        dotnet tool install --global dotnet-coverage
     - name: Build and analyze
       run: |
         dotnet build -c Release ${{ inputs.sln-file }}
