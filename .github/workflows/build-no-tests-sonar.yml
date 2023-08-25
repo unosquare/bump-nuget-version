@@ -78,6 +78,6 @@ jobs:
         SONAR_TOKEN: ${{ secrets.sonar-token }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.sonar-key }}" /o:"unosquare" /d:sonar.login="${{ secrets.sonar-token }}" /d:sonar.host.url="https://sonarcloud.io"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.sonar-key }}" /o:"unosquare" /d:sonar.token="${{ secrets.sonar-token }}" /d:sonar.host.url="https://sonarcloud.io"
         dotnet build -c Release ${{ inputs.sln-file }}
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.sonar-token }}"
