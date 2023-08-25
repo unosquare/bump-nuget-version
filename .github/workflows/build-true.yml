@@ -88,4 +88,4 @@ jobs:
     - name: End sonar scan
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.sonar-token }}"
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.sonar-token }}"
