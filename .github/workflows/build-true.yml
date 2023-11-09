@@ -24,7 +24,8 @@ on:
         
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on:
+      group: window-runners
 
     steps:
     - name: ☕ Set up JDK 17
