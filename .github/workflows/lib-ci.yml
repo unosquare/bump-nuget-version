@@ -50,6 +50,7 @@ jobs:
           5.x
           6.x
           7.x
+          8.x
     - name: 🧑‍💻 Checkout codebase
       uses: actions/checkout@v4
       with:
