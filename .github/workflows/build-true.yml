@@ -87,7 +87,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.sonar-token }}
       shell: powershell
       run: |
-        dotnet build -c Release ${{ inputs.sln-file }}
+        dotnet build --nologo -v q --property WarningLevel=0 /clp:ErrorsOnly -c Release ${{ inputs.sln-file }}
     - name: Run tests
       shell: powershell
       run: |
