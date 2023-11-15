@@ -91,7 +91,7 @@ jobs:
     - name: Run tests
       shell: powershell
       run: |
-        dotnet-coverage collect "dotnet test --no-restore --no-build ${{ inputs.sln-file }}" -f xml  -o "coverage.xml"
+        dotnet-coverage collect "dotnet test --no-restore --no-build -c Release ${{ inputs.sln-file }}" -f xml  -o "coverage.xml"
     - name: End sonar scan
       shell: powershell
       run: |
