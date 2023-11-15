@@ -9,15 +9,8 @@ on:
       cache-version:
         description: 'The Cache version.'
         required: true
-      sonar-token:
-        description: 'The Sonar Token.'
-        required: true
     inputs:
       sln-file:
-        description: 'The name of the project to build. Must match the directory name.'
-        required: true
-        type: string
-      sonar-key:
         description: 'The name of the project to build. Must match the directory name.'
         required: true
         type: string
