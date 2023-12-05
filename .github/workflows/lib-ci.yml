@@ -64,10 +64,6 @@ jobs:
         key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
           nuget-${{ secrets.cache-version }}-
-    - name: ➕ Add nugets source
-      uses: unosquare/add-nuget-source@master 
-      with:
-        access-token: ${{ secrets.github-token }}
     - name: 🐝 Bump version
       uses: unosquare/bump-nuget-version@master 
       with:
