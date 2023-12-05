@@ -27,11 +27,6 @@ on:
         required: false
         default: ''
         type: string
-      prerelease-versions-kept:
-        description: 'The number of pre-release versions kept in the GitHub registry.'
-        required: false
-        type: number
-        default: 10
       version-bump-level:
         description: 'The version component to bump after publishing.'
         required: false
@@ -46,7 +41,7 @@ jobs:
     - name: 🐜 Setup .NET
       uses: actions/setup-dotnet@v4
       env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        NUGET_AUTH_TOKEN: ${{ secrets.github-token }}
       with:
         source-url: https://nuget.pkg.github.com/unosquare/index.json
         dotnet-version: | 
