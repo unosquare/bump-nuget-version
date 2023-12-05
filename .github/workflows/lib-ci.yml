@@ -44,10 +44,12 @@ jobs:
     
     steps:
     - name: 🐜 Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       with:
+        source-url: https://nuget.pkg.github.com/unosquare/index.json
         dotnet-version: | 
-          5.x
           6.x
           7.x
           8.x
@@ -75,10 +77,8 @@ jobs:
       run: |
         dotnet pack '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/${{ inputs.project-name }}.csproj' --configuration Release 
     - name: 🍱 Publish nuget
-      uses: unosquare/publish-nuget-package@master
-      with:
-        access-token: ${{ secrets.github-token }}
-        path: '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/bin/Release'
+      run: |
+        dotnet nuget push '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/bin/Release/*.nupkg'
     - name: 📌 Commit
       uses: EndBug/add-and-commit@v9
       with:
