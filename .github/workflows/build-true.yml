@@ -46,7 +46,7 @@ jobs:
     - name: Run tests
       run: |
         dotnet build ${{ inputs.sln-file }}
-        dotnet --no-build test ${{ inputs.sln-file }}
+        dotnet test --no-build ${{ inputs.sln-file }}
       
   build:
     needs: dry-run
