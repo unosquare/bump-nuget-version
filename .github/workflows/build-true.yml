@@ -28,12 +28,6 @@ jobs:
       group: linux-runners
 
     steps:
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: | 
-          6.x
-          8.x
     - name: 🛎 Checkout
       uses: actions/checkout@v4
       with:
