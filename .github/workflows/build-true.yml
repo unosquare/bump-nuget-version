@@ -18,12 +18,44 @@ on:
         required: true
         type: string
       sonar-key:
-        description: 'The name of the project to build. Must match the directory name.'
+        description: 'The Sonar key project.'
         required: true
         type: string
         
 jobs:
+  dry-run:
+    runs-on:
+      group: linux-runners
+
+    steps:
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: | 
+          6.x
+          8.x
+    - name: 🛎 Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: 📦 Cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          nuget-${{ secrets.cache-version }}-
+    - name: ➕ Add nugets source
+      uses: unosquare/add-nuget-source@master 
+      with:
+        access-token: ${{ secrets.github-token }}
+    - name: Run tests
+      run: |
+        dotnet build ${{ inputs.sln-file }}
+        dotnet --no-build test ${{ inputs.sln-file }}
+      
   build:
+    needs: dry-run
     runs-on:
       group: window-runners
 
