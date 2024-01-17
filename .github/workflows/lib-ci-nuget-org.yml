@@ -58,7 +58,7 @@ jobs:
           6.x
           8.x
     - name: 📦 Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}

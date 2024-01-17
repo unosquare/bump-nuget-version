@@ -33,7 +33,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: 📦 Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
@@ -70,7 +70,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: 📦 Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
@@ -81,14 +81,14 @@ jobs:
       with:
         access-token: ${{ secrets.github-token }}
     - name: Cache SonarCloud packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~\sonar\cache
         key: ${{ runner.os }}-sonar-${{ secrets.cache-version }}
         restore-keys: ${{ runner.os }}-sonar-${{ secrets.cache-version }}
     - name: Cache SonarCloud scanner
       id: cache-sonar-scanner
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: .\.sonar\scanner
         key: ${{ runner.os }}-sonar-scanner-${{ secrets.cache-version }}

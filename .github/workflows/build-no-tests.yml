@@ -23,7 +23,7 @@ jobs:
     - name: 🛎 Checkout
       uses: actions/checkout@v4
     - name: 📦 Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
