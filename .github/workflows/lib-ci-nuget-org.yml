@@ -57,6 +57,7 @@ jobs:
         dotnet-version: | 
           6.x
           8.x
+          9.x
     - name: 📦 Cache
       uses: actions/cache@v4
       with:
