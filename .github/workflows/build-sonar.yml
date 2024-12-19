@@ -37,6 +37,7 @@ jobs:
         access-token: ${{ secrets.github-token }}
     - name: Install dotnet coverage
       run: |
+        apt-get update && apt-get install libxml2
         dotnet tool install --global dotnet-coverage
     - name: Build and analyze
       run: |
