@@ -31,6 +31,11 @@ jobs:
         key: nuget-${{ secrets.cache-version }}-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
           nuget-${{ secrets.cache-version }}-
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: | 
+          8.x
+          9.x
     - name: ➕ Add nugets source
       uses: unosquare/add-nuget-source@master 
       with:
