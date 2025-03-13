@@ -1,4 +1,4 @@
-name: Lib - Build, Test and Report Sonar
+name: Lib - Build, Test (former sonar)
 
 on: 
   workflow_call:
@@ -40,13 +40,9 @@ jobs:
       uses: unosquare/add-nuget-source@master 
       with:
         access-token: ${{ secrets.github-token }}
-    - name: Install dotnet coverage
-      run: |
-        apt-get update && apt-get install libxml2
-        dotnet tool install --global dotnet-coverage
     - name: Build and analyze
       run: |
         dotnet build -c Release ${{ inputs.sln-file }}
     - name: Run tests
       run: |
-        dotnet-coverage collect "dotnet test ${{ inputs.sln-file }}" -f xml  -o "coverage.xml"
+        dotnet test ${{ inputs.sln-file }}
