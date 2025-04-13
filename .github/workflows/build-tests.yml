@@ -23,8 +23,6 @@ jobs:
     steps:
     - name: 🛎 Checkout
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
     - name: 📦 Cache
       uses: actions/cache@v4
       with:
@@ -35,7 +33,6 @@ jobs:
     - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: | 
-          8.x
           9.x
     - name: ➕ Add nugets source
       uses: unosquare/add-nuget-source@master 
