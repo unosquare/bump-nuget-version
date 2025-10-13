@@ -35,9 +35,7 @@ jobs:
         dotnet-version: | 
           9.x
     - name: ➕ Add nugets source
-      uses: unosquare/add-nuget-source@master 
-      with:
-        access-token: ${{ secrets.github-token }}
+      run: dotnet nuget add source https://nuget.pkg.github.com/unosquare/index.json -n github -u unosquare -p ${{ secrets.github-token }} --store-password-in-clear-text
     - name: Build and analyze
       run: |
         dotnet build -c Release ${{ inputs.sln-file }}
