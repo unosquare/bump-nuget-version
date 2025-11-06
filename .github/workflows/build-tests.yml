@@ -38,7 +38,7 @@ jobs:
       run: dotnet nuget add source https://nuget.pkg.github.com/unosquare/index.json -n github -u unosquare -p ${{ secrets.github-token }} --store-password-in-clear-text
     - name: Build and analyze
       run: |
-        dotnet build -c Release ${{ inputs.sln-file }}
+        dotnet build -c Release ${{ inputs.sln-file }} -p:WarningLevel=0
     - name: Run tests
       run: |
         dotnet test ${{ inputs.sln-file }}
