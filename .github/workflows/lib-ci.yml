@@ -45,7 +45,7 @@ jobs:
       with:
         source-url: https://nuget.pkg.github.com/unosquare/index.json
         dotnet-version: | 
-          8.x
+          10.x
           9.x
     - name: 🧑‍💻 Checkout codebase
       uses: actions/checkout@v6
