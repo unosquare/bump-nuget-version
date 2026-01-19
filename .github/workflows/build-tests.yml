@@ -37,4 +37,4 @@ jobs:
         dotnet build -c Release ${{ inputs.sln-file }} -p:WarningLevel=0
     - name: Run tests
       run: |
-        dotnet test ${{ inputs.sln-file }}
+        dotnet test ${{ inputs.sln-file }}  -p:WarningLevel=0
