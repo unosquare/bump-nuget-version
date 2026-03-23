@@ -70,6 +70,6 @@ jobs:
       run: |
         dotnet nuget push '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/bin/Release/*.nupkg'
     - name: 📌 Commit
-      uses: EndBug/add-and-commit@v9
+      uses: EndBug/add-and-commit@v10
       with:
         message: '[skip ci] Bump version'
