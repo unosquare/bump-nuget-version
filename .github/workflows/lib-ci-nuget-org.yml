@@ -75,6 +75,6 @@ jobs:
         dotnet pack '${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/${{ inputs.project-name }}.csproj' --configuration Release 
         dotnet nuget push ${{ inputs.base-path }}${{ inputs.source-path }}${{ inputs.project-name }}/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.nuget-api-key }}
     - name: 📌 Commit
-      uses: EndBug/add-and-commit@v9
+      uses: EndBug/add-and-commit@v10
       with:
         message: '[skip ci] Bump version'
