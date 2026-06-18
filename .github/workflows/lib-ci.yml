@@ -48,7 +48,7 @@ jobs:
           10.x
           9.x
     - name: 🧑‍💻 Checkout codebase
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         token: ${{ secrets.github-token }}
     - name: 📦 Cache
